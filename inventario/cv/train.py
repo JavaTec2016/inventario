@@ -10,6 +10,7 @@ from keras.layers import LeakyReLU, Reshape, Activation, Conv2D, Input, MaxPooli
 from keras.optimizers import SGD, Adam, RMSprop
 from keras.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard
 
+from inventario.basedatos.models import Articulo
 from inventario.cv.augment import BatchGenerator
 from inventario.cv.util import compute_ap, compute_overlap, decode_netout
 
@@ -21,9 +22,7 @@ size = 3120
 xml_name = 'si'   
 img_name = 'si'
 #de la BD
-labels = [
-    "cafe_oro"
-]
+labels = []
 xml_dir = 'annotation/' + xml_name
 img_dir = 'annotation/' + img_name
 TRAINED_NAME = 'cnn_inventario.h5'
@@ -791,11 +790,20 @@ for x in centroids:
     anchors.append(x[1])
 anchors
 
-#============= ENTRENAR
+
 def getDatasetLabels():
     return labels
 
+def retrieveArticulos():
+    labels = []
+    artics = Articulo.objects.all()
+    for art in artics:
+        labels.append(art.nombre.__str__())
+
+#============= ENTRENAR
+
 def instanciar():
+    retrieveArticulos()
     return YOLO(input_size          = size, 
             labels              = labels, 
             max_box_per_image   = 5,

@@ -1,0 +1,74 @@
+{% extends "inventario/base.html" %}
+
+{% block title %}Inventario{% endblock title %}
+{%block bodyStyle %} style="background-color: antiquewhite;" {% endblock bodyStyle %}
+{% block content %}
+<!--todo el content-->
+<div class="row">
+    <div class="col-md-12">
+        <h1 style="font-size: 28px; margin-top: 50px;" class="text-center">
+            EXISTENCIAS DE ARTICULOS</h1>
+
+            <!--un breadcrumb?-->
+
+            <!--lo importante-->
+            <div class="row shadow" style="background-color: whitesmoke;">
+                <div class="col-md-12">
+                    <div class="content-box-large">
+                        <div class="panel-heading">
+                            <div class="panel-title">
+                                <h2>PRODUCTOS</h2>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <a href="inventario/crear" class="btn mt-4 ml-3"
+                                style="background-color: whitesmoke; color: green; font-weight: bold; border-radius: 0;">
+                                + Agregar
+                            </a>
+
+                            <section class="mt-4" style="background-color: whitesmoke;">
+                                <table class="table table-hover" id="tabla_alumnos">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Existencias</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% if articulos|length == 0 %}
+                                            <tr>
+                                                <td colspan="3" class="v-align-middle"><p style="font-style: italic; text-align: center;">Sin articulos</p></td>
+                                            </tr>
+                                        {% endif %}
+                                        {% for a in articulos %}
+                                        <tr>
+                                            <td class="v-align-middle">{{a.nombre}}</td>
+                                            <td class="v-align-middle">{{a.existencias}}</td>
+                                            <td class="v-align-middle">
+                                                <form action="inventario/eliminar/{{a.nombre}}"
+                                                    onsubmit="return confirmarEliminacion();">
+                                                    {% csrf_token %}
+                                                    <a href="inventario/editar/{{a.nombre}}" style="background-color: whitesmoke; color: orange;">Editar</a>
+                                                    <button type="submit" style="background-color: whitesmoke; color: red;">
+                                                        Eliminar
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function confirmarEliminacion() {
+      return confirm("Seguro que quieres ELIMINAR el alumbo?");
+    }
+  </script>
+{% endblock content %}

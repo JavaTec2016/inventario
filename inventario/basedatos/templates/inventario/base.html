@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}titulo{% endblock title %}</title>
+
+  {% load django_bootstrap5 %}
+  {% bootstrap_css %}
+  {% load widget_tweaks %}
+  {%load static %}
+
+</head>
+
+<body {% block bodyStyle %}style="background-color: trasnparent;"{% endblock bodyStyle %}>
+  <header>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <h4 style="color: white;" class="me-4">CONTROL DE INVENTARIO</h4>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="navegacion"
+          aria-controls="navegacion" aria-expanded="false" aria-label="Mostrar/Ocultar navegacion">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navegacion">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">INICIO</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="">Ver inventario</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="inventario/agregar">Nuevo articulo</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="inventario/modificar">Modificar inventario</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+  </header>
+  <div class="container mt-5 mb-5">
+    <br>
+    {% block content %}
+    {% endblock content %}
+  </div>
+  <hr>
+  <footer class="text-muted mt-3 mb-3">
+    <div align="center">-oOOo-</div>
+  </footer>
+</body>
+
+</html>

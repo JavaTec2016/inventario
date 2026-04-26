@@ -1,0 +1,1 @@
+https://www.aprendemachinelearning.com/deteccion-de-objetos-con-python-yolo-keras-tutorial/

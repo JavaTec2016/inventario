@@ -1,7 +1,10 @@
+from django.http import HttpRequest
 from django.shortcuts import render
 
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+
+from .cv.foto_parser import procesar, convertir
 
 from .models import *
 from django.urls import reverse
@@ -40,3 +43,18 @@ class Login(LoginView):
     def form_invalid(self, form):
         messages.error(self.request, 'Usuario o contraseña incorrectos.')
         return self.render_to_response(self.get_context_data(form=form))
+    
+
+#===procesar fotos
+
+def procesarBatch(request:HttpRequest):
+    if request.method == 'GET':
+        return render(request, 'inventario/subes.html', {})
+    elif request.method == 'POST':
+        archivos = request.FILES.getlist('fotos[]')
+        if not archivos:
+            return render(request, 'inventario/subes.html', {'error':'No se subieron imagenes.'})
+        for arch in archivos:
+            arch.read()
+        procesar(convertir(archivos))
+        return render(request, 'inventario/subes.html' ,{'msg': 'todo bien'})

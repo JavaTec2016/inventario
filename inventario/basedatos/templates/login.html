@@ -35,4 +35,13 @@
     </div>
     {% endblock content %}
 </body>
+
+<script>
+    localStorage.setItem('clave', 'valor'); //almacena el par clave ('clave') -valor ('valor')
+    localStorage.getItem('clave'); //retorna "valor"
+    localStorage.key(0); //retorna "clave"
+    localStorage.removeItem('clave'); //borra el par clave-valor
+    localStorage.clear(); //borra todos los datos
+</script>
+
 </html>

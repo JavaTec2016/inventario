@@ -1,0 +1,31 @@
+{% extends "inventario/base.html" %}
+
+{% block title %}Escanear imagen{% endblock title %}
+
+{%block bodyStyle %} style="background-color: antiquewhite;" {% endblock bodyStyle %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12">
+                <h1 style="font-size: 28px; margin-top: 50px;" class="text-center">
+                    ESCANEAR FOTOS DE INVENTARIO
+                </h1>
+
+                <div class="row shadow" style="background-color: whitesmoke;">
+                    <div class="col-md-12">
+                        <div class="content-box-large">
+                            <section>
+                                <form method="post" role="form" action="/inventario/subes" enctype="multipart/form-data">
+                                    {%csrf_token%}
+                                    <label for="fotos">Seleccionar fotos</label>
+                                    <input type="file" multiple class="form-control" name="fotos[]" id="fotos" accept="image/*">
+                                    <input type="submit" class="btn btn-primary" value="Escanear">
+                                </form>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+    </div>
+</div>
+
+{% endblock content %}

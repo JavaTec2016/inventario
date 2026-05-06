@@ -56,5 +56,5 @@ def procesarBatch(request:HttpRequest):
             return render(request, 'inventario/subes.html', {'error':'No se subieron imagenes.'})
         for arch in archivos:
             arch.read()
-        procesar(convertir(archivos))
-        return render(request, 'inventario/subes.html' ,{'msg': 'todo bien'})
+        objetos = procesar(convertir(archivos))
+        return render(request, 'inventario/subes.html' ,{'msg': 'todo bien', 'conteo':objetos})

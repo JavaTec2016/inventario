@@ -1,4 +1,5 @@
 import datetime
+import json
 
 import cv2
 import numpy as np
@@ -19,10 +20,21 @@ def convertir(fotos:list[UploadedFile]):
         imagenes.append(img)
     return imagenes
 
+def contabilizar(results:list):
+    resultConteos = {}
+    for res in results:
+        for clase in json.loads(res.to_json()):
+            resultConteos[clase['name']] = resultConteos.get(clase['name'], 0)+1
+    return resultConteos
+
 def procesar(imagenes:list[cv2.typing.MatLike]):
     print('imgs: ', len(imagenes))
     i = 0
-    for imagen in imagenes:
-        results = MODEL(imagen, verbose=False)
-        results[0].save('./output/'+ datetime.datetime.now().strftime("%d-%m-%Y_%H%M%S")+"_"+str(i)+".png")
+    results = MODEL(imagenes, verbose=True)
+    print('Contando objetos...')
+    resultConteos = contabilizar(results)
+    for res in results:
+        #res.save('./output/'+ datetime.datetime.now().strftime("%d-%m-%Y_%H%M%S")+"_"+str(i)+".png")
         i+=1
+    print(resultConteos)
+    return resultConteos

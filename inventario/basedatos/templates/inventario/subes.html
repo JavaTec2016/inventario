@@ -14,13 +14,28 @@
                 <div class="row shadow" style="background-color: whitesmoke;">
                     <div class="col-md-12">
                         <div class="content-box-large">
-                            <section>
+                            <section class="my-2 p-2">
                                 <form method="post" role="form" action="/inventario/subes" enctype="multipart/form-data">
                                     {%csrf_token%}
                                     <label for="fotos">Seleccionar fotos</label>
                                     <input type="file" multiple class="form-control" name="fotos[]" id="fotos" accept="image/*">
                                     <input type="submit" class="btn btn-primary" value="Escanear">
                                 </form>
+                            </section>
+                            <section class="my-2 p-2">
+                                <div>
+                                    <h3>Objetos detectados: </h3>
+                                {% if conteo %}
+                                    {% for clase, cantidad in conteo.items %}
+                                        <div class="d-flex">
+                                            <p class="ps-2" style='font-weight:bold'>{{clase}}: </p>
+                                            <p class="px-2">{{cantidad}}</p>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <span>Los objetos detectados apareceran aqui.</span>
+                                {% endif %}
+                                </div>
                             </section>
                         </div>
                     </div>
